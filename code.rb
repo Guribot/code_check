@@ -19,11 +19,7 @@ end
 
 songs = [{name: '', length: -1, plays: -1, playtime: -1},{name: '', length: -1, plays: -1, playtime: -1},{name: '', length: -1, plays: -1, playtime: -1},{name: '', length: -1, plays: -1, playtime: -1}]
 total_jam = 0
-most_jammed = {name: '', playtime: -1}
-also_jammed = {name: '', playtime: -1}
-also_also_jammed = {name: '', playtime: -1}
-also_also_also_jammed = {name: '', playtime: -1}
-tie = 1
+most_jammed = [{playtime: -1}]
 
 puts "\n---------------------
  WELCOME TO JAM TIME 
@@ -31,7 +27,7 @@ puts "\n---------------------
 
 songs.each_with_index do |song,i|
   puts "\nSong number #{i+1}:"
-  print "  Enter name of song:"
+  print "  Enter name of song: "
   song[:name] = $stdin.gets.chomp
   while song[:length] < 0
     print "  Enter length of song in seconds: "
@@ -58,28 +54,25 @@ puts "\nJam Time data for \"#{songs[0][:name]}\", \"#{songs[1][:name]}\", \"#{so
 songs.each do |song|
   puts "Time spent jamming to \"#{song[:name]}\" is #{print_time(song[:playtime])}."
   total_jam += song[:playtime] 
-    if song[:playtime] > most_jammed[:playtime]
-      most_jammed = song
-      tie = 1
-    elsif song[:playtime] == most_jammed[:playtime]
-      tie += 1
-      if tie == 2
-        also_jammed = song
-      elsif tie == 3
-        also_also_jammed = song
-      elsif tie == 4
-       also_also_also_jammed = song
-     end
+    if song[:playtime] > most_jammed[0][:playtime]
+      most_jammed = [song]
+    elsif song[:playtime] == most_jammed[0][:playtime]
+      most_jammed << song
     end
 end
 
 puts "\nTotal time spent jamming: #{print_time(total_jam)}"
 
 print "\nThe song you listened to most was: "
-print "\"#{most_jammed[:name]}\""
-print ", tied with \"#{also_jammed[:name]}\"" if tie > 1
-print ", and \"#{also_also_jammed[:name]}\"" if tie > 2
-print ", and \"#{also_also_also_jammed[:name]}\"" if tie > 3
-puts ", with a jam time of #{print_time(most_jammed[:playtime])}."
+most_jammed.each_with_index do |song, i|
+  if i == 0
+    print "\"#{song[:name]}\""
+  elsif i == 1
+    print ", tied with \"#{song[:name]}\""
+  else
+    print ", and \"#{song[:name]}\""
+  end
+end
+puts ", with a jam time of #{print_time(most_jammed[0][:playtime])}."
 
 puts "\n---------------------"
