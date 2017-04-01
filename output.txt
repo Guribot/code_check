@@ -1,33 +1,33 @@
-“Example run & explanation: Paste a sample run of your program and explain what happened (control flow) as the program ran."
+"Example run & explanation: Paste a sample run of your program and explain what happened (control flow) as the program ran."
 
-Output:  ## user input marked with ~tildes~ as per the example
-----------------------
- WELCOME TO JAM TIME! 
-----------------------
+Output:  ## user input marked with ~tildes~
+---------------------
+ WELCOME TO JAM TIME 
+---------------------
 
 
 Song number 1:
-  Enter name of song: ~Jackson Cannery~
-  Enter length of song in seconds: ~203~
-  Enter number of times song has been played: ~15~
+  Enter name of song:  ~Jackson Cannery~
+  Enter length of song in seconds:  ~203~
+  Enter number of times song has been played:  ~15~
   Got it! "Jackson Cannery" is 203 seconds long and has been played 15 times.
 
 Song number 2:
-  Enter name of song: ~Way We Won't~
-  Enter length of song in seconds: ~262~
-  Enter number of times song has been played: ~12~
+  Enter name of song:  ~Way We Won't~
+  Enter length of song in seconds:  ~262~
+  Enter number of times song has been played:  ~12~
   Got it! "Way We Won't" is 262 seconds long and has been played 12 times.
 
 Song number 3:
-  Enter name of song: ~Left Hand Free~
-  Enter length of song in seconds: ~176~
-  Enter number of times song has been played: ~8~
+  Enter name of song:  ~Left Hand Free~
+  Enter length of song in seconds:  ~176~
+  Enter number of times song has been played:  ~8~
   Got it! "Left Hand Free" is 176 seconds long and has been played 8 times.
 
 Song number 4:
-  Enter name of song: ~Eet~
-  Enter length of song in seconds: ~230~
-  Enter number of times song has been played: ~11~
+  Enter name of song:  ~Eet~
+  Enter length of song in seconds:  ~230~
+  Enter number of times song has been played:  ~11~
   Got it! "Eet" is 230 seconds long and has been played 11 times.
 
 ---------------------
@@ -41,8 +41,7 @@ Time spent jamming to "Eet" is 42 minutes, 10 seconds.
 
 Total time spent jamming: 2 hours, 48 minutes, 47 seconds
 
-The song you listened to most was: "Way We Won't",
-with a jam time of 52 minutes, 24 seconds.
+The song you listened to most was: "Way We Won't", with a jam time of 52 minutes, 24 seconds.
 
 ---------------------
 
@@ -50,18 +49,18 @@ Explanation:
 
 While reviewing the sample output given in the prompt, something that quickly caught my attention was how difficult to parse the time totals were. Since people (more specifically, English speakers) rarely use seconds exclusively to describe any amount of time longer than a minute or two, I chose to have my own code display the time in hours, minutes, and seconds.
 
-The first thing the program does is define a function to do this, called "print_time", which takes an argument of the number of seconds. It then uses division and modulo operators to break the seconds down into hours, minutes, and seconds, which are each assigned to their own variables. The function then uses a series of if statements to build a string that will write out the time differently depending on the time - for instance, it will not include "hours" or "minutes" if hours == 0 or minutes == 0, respectively (but will print "0 seconds" if seconds == 0, in case the total time is 0 seconds), and accounts for plural/singular nouns where relevant. It ultimately returns the string it builds.
+The first thing the program does is define a function to do this, called "print_time", which takes an argument of the number of seconds. It then uses division and modulo operators to break the seconds down into hours, minutes, and seconds, which are each assigned to their own variables. The function then uses a series of if statements to build a string that will write out the time differently depending on the length of time - for instance, it will not include "hours" or "minutes" if hours == 0 or minutes == 0, respectively (but will print "0 seconds" if seconds == 0, in case the total time is 0 seconds), and accounts for plural/singular nouns where relevant. It ultimately returns the string it builds.
 
-The program then defines some variables. The first, "songs", is an array of 4 hashes that will contain the song information entered by the user. Each hash begins with the keys "name", "length", "plays", and "playtime". The first is an empty string, the other 3 begin with a value of -1. It then defines a variable called "total_jam" with a value of 0 that will later be used to calculate the total listening time. Then four hashes are defined, called "most_jammed", "also_jammed", "also_also_jammed", and "also_also_also_jammed". Each hash is initially defined with the keys "name" and "playtime", initializing as an empty string and a value of -1 respectively. The first of these will be used to determine the song that has been played for the longest, the latter 3 will be used in the event of ties. For the same reason, a variable called "tie" is created and set initially to 1. 
+The program then defines some variables. The first, "songs", is an array of 4 hashes that will contain the song information entered by the user. Each hash begins with the keys "name", "length", "plays", and "playtime". The first is an empty string, the other 3 begin with a value of -1. It then defines a variable called "total_jam" with a value of 0 that will later be used to calculate the total listening time. Finally, a variable called "most_jammed" is defined as an array containing a hash with the key-value pair "playtime: -1".
 
-With the definitions out of the way, the program begins output. It first prints to console the title, "Welcome to Jam Time". It then loops through each hash in the "songs" array. For each one, it asks the user to input the name, length in seconds, and times played for the songs and stores these in the hash. All input has the trailing newline removed, and the latter two are converted to integers. For the song length and times played, it will ask again if the number is a negative number, until the user inputs a number that is 0 or greater. It then summarizes the information back to the user, and calculates the "playtime" value in the hash by multiplying the length of the song by the number of times it's been played.
+With the definitions out of the way, the program begins output. It first prints to console the title, "Welcome to Jam Time". It then loops through each hash in the "songs" array. For each one, it asks the user to input the name, length in seconds, and times played for the songs and stores these in the hash. All input has the trailing newline removed, and the latter two are converted to integers. For the song length and times played, if the number input is negative it will continue to ask for input until the user enters a number that is 0 or greater. It then summarizes the information back to the user, and calculates the "playtime" value in the hash by multiplying the length of the song by the number of times it's been played.
 
-Having collected the necessary data, the program prints a dividing line and then lists out the song titles that have been input. It then loops again through each hash in the "songs" array. This loop does three things - first, it prints to console the current song's total play time, converted by the print_time function to hours, minutes, and seconds. Then it adds the current song's total playtime to the running total variable, "total_jam". Then the program compares the total playtime of the current entry for "most_jammed". If the current song's total playtime is longer than the "most_jammed" playtime, it assigns the current song's name and playtime to the "most_jammed" variable and resets the "tie" variable to 1. If the current song's playtime is equal to that of the "most_jammed" variable, it will add 1 to the "tie" variable. Depending on whether the variable is 2, 3, or 4 (representing a 2-way, 3-way, or 4-way tie respectively) it will assign the current song's data to either the "also_jammed", "also_also_jammed", or "also_also_also_jammed" variables.
+Having collected the necessary data, the program lists out the song titles that have been input. It then loops again through each hash in the "songs" array. This loop does three things - first, it prints to console the current song's total play time, converted by the "print_time" function to hours, minutes, and seconds. Then it adds the current song's total playtime to the running total variable, "total_jam". Then the program compares the total playtime of the current entry for "most_jammed". Since this is set to -1 by default, the first song will always be longer. If the current song's playtime is longer than the current first entry for "most_jammed", it will assign the current song (contained in an array) to the "most_jammed" variable. If the current song's playtime is equal to the current first entry for "most_jammed", it will push the current song onto the "most_jammed" array. 
 
-After this loop has finished, the program prints out the total time spent listening to music (the "total_jam" variable, converted using the "print_time" function) and the song listened to the most (the "most_jammed" variable, also using "print_time"). By checking the value of the "tie" variable with if statements it will selectively print more text to include the names of any other songs ("also_jammed", etc) tied for most-listened if applicable.
+After this loop has finished, the program prints out the total time spent listening to music (the "total_jam" variable, converted using the "print_time" function). It then loops through the "most_jammed" array. Using if statements in combination with the loop's index, it prints a sentence that can describe either one song that has been listened to the most, or a tie of 2 or more songs, and then prints the playtime of the song(s) listened to longest.
 
 
--"What didn't work: Describe something that you tried that didn't work and how you eventually fixed it."
+"What didn't work: Describe something that you tried that didn't work and how you eventually fixed it."
 
 While writing the "print_time" function, I experimented with using a hash to build the message that would include the formula for finding each unit of time, and the two strings for singular and plural names of the unit of time. I hoped this would create a more compact function than the function I initially wrote that plugged numbers into various combinations of strings, but when I tested it, it took about twice as long to run. The code also seemed harder to follow along with, so I returned to the more basic method of building the string.
 
@@ -70,4 +69,4 @@ I also had issues with a 4-way tie of all 0-second totals returning incorrect ou
 
 "What could be better: Describe a situation where your code may not perform as you would like."
 
-While the program does confirm that the user has not entered a negative number for any of the times, it is far more difficult to check if what the user has input is a number either before or after it has been converted to an integer. Googling this issue revealed articles about how complicated this actually was. While I was able to find examples of code that would perform this task, it was far beyond my current understanding of Ruby and I did not feel comfortable using someone else's method that I didn't understand. Because of this, while the program will always end up with an integer that is 0 or greater, it will also interpret any non-numerical input as 0. Ideally the program would continue to ask the user to input a number until the input was all digits to avoid any mistakes that may come from a user entering the time incorrectly (e.g. "3:15" or "5,939"). 
+While the program does confirm that the user has not entered a negative number for any of the times, it is far more difficult to check if what the user has input is a number either before or after it has been converted to an integer. Googling this issue revealed articles about how complicated this actually was. While I was able to find examples of code that would perform this task, it was far beyond my current understanding of Ruby and I did not feel comfortable using someone else's method that I didn't understand. Because of this, while the program will always end up with an integer that is 0 or greater, it will also interpret any non-numerical input as 0. Ideally the program would continue to ask the user to input a number until the input was all digits to avoid any mistakes that may come from a user entering the time incorrectly (e.g. "3:15" or "5,939").
